@@ -6,6 +6,7 @@ import { useFileUpload } from "@/hooks/useFileUpload";
 export const FileUploader = () => {
   const [file, setFile] = useState<File | null>(null);
   const [isDragging, setIsDragging] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const { isConnected } = useAccount();
 
   const { uploadFileMutation, uploadedInfo, handleReset, status, progress } =
@@ -41,6 +42,12 @@ export const FileUploader = () => {
     }
   }, []);
 
+  // Defensive: Reset error on file change
+  const handleFileChange = (file: File | null) => {
+    setFile(file);
+    setError(null);
+  };
+
   if (!isConnected) {
     return null;
   }
@@ -63,7 +70,7 @@ export const FileUploader = () => {
           id="fileInput"
           type="file"
           onChange={(e) => {
-            e.target.files && setFile(e.target.files[0]);
+            e.target.files && handleFileChange(e.target.files[0]);
             e.target.value = "";
           }}
           className="hidden"
@@ -97,7 +104,21 @@ export const FileUploader = () => {
         <button
           onClick={async () => {
             if (!file) return;
-            await uploadFile(file);
+            setError(null);
+            try {
+              await uploadFile(file);
+            } catch (err: any) {
+              // Defensive: Show user-friendly error for MetaMask/network issues
+              if (err?.message?.includes("Internal JSON-RPC error")) {
+                setError(
+                  "MetaMask RPC Error: Please check your network, contract address, and ensure you are connected to the Filecoin Calibration network."
+                );
+              } else if (err?.message) {
+                setError(err.message);
+              } else {
+                setError("An unknown error occurred. Please try again.");
+              }
+            }
           }}
           disabled={!file || isLoading || !!uploadedInfo}
           aria-disabled={!file || isLoading}
@@ -115,6 +136,7 @@ export const FileUploader = () => {
           onClick={() => {
             handleReset();
             setFile(null);
+            setError(null);
           }}
           disabled={!file || isLoading}
           aria-disabled={!file || isLoading}
@@ -129,6 +151,12 @@ export const FileUploader = () => {
           Reset
         </button>
       </div>
+      {/* Error message display */}
+      {error && (
+        <div className="mt-4 text-center">
+          <p className="text-sm text-red-600 font-semibold">{error}</p>
+        </div>
+      )}
       {status && (
         <div className="mt-4 text-center">
           <p
