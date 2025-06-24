@@ -9,10 +9,16 @@ import { useConfetti } from "@/hooks/useConfetti";
 import { ViewProofSets } from "@/components/ViewProofSets";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { useBalances } from "@/hooks/useBalances";
-import Github from "@/components/ui/icons/Github";
-import Filecoin from "@/components/ui/icons/Filecoin";
 
-type Tab = "manage-storage" | "upload" | "proof-set";
+// Professional tab names
+const TABS = [
+  { key: "my-storage", label: "My Storage" },
+  { key: "upload", label: "Upload" },
+  { key: "add-drive", label: "Add from Drive" },
+  { key: "add-repo", label: "Add Repo" },
+  { key: "proof-set", label: "Proof Sets" },
+] as const;
+type Tab = typeof TABS[number]["key"];
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -38,7 +44,7 @@ const itemVariants = {
 
 export default function Home() {
   const { isConnected, chainId } = useAccount();
-  const [activeTab, setActiveTab] = useState<Tab>("manage-storage");
+  const [activeTab, setActiveTab] = useState<Tab>("my-storage");
   const { showConfetti } = useConfetti();
   const { data: balances, isLoading: isLoadingBalances } = useBalances();
 
@@ -62,65 +68,35 @@ export default function Home() {
         variants={containerVariants}
         initial="hidden"
         animate="visible"
-        className="flex flex-col items-center my-10  w-full mx-auto"
+        className="flex flex-col items-center my-10 w-full mx-auto"
       >
+        {/* Hero Section */}
         <motion.div
           variants={itemVariants}
           whileHover={{ scale: 1.05 }}
           transition={{ duration: 0.3 }}
-          className="text-3xl font-bold uppercase tracking-tighter text-foreground flex items-center gap-2"
+          className="text-4xl font-extrabold tracking-tight text-blue-600 flex items-center gap-2 mb-2"
         >
-          <Filecoin />
-          Fil services demo
-          <motion.a
-            whileHover={{ scale: 1.3 }}
-            href="https://github.com/FIL-Builders/fs-upload-dapp"
-            className="text-primary transition-colors duration-200 hover:underline cursor-pointer rounded-md hover:text-[#008cf6]"
-            target="_blank"
-          >
-            <Github />
-          </motion.a>
-          <motion.p
-            variants={itemVariants}
-            className="text-xl font-semibold lowercase transition-colors duration-50 hover:text-foreground flex items-center gap-2"
-          >
-            powered by
-            <motion.a
-              href="https://github.com/FilOzone/synapse-sdk"
-              className="text-primary transition-colors duration-200 hover:underline cursor-pointer hover:text-[#008cf6] rounded-md p-1"
-              target="_blank"
-            >
-              synapse-sdk
-            </motion.a>
-          </motion.p>
+          store<span className="text-gray-900 dark:text-white">whatever</span>
         </motion.div>
-
         <motion.p
           variants={itemVariants}
-          className="text-lg font-semibold capitalize-none transition-colors duration-50 mb-2  mt-1 hover:text-foreground flex items-center gap-2 text-center"
+          className="text-base font-medium text-gray-600 dark:text-gray-300 mb-4 text-center max-w-2xl"
         >
-          upload files to filecoin with{" "}
-          <motion.a
-            href="https://docs.secured.finance/usdfc-stablecoin/getting-started"
-            className="text-[#e9ac00] hover:underline cursor-pointer"
-            target="_blank"
-          >
-            USDFC
-          </motion.a>
-          your balance:
-          {isLoadingBalances || !isConnected
-            ? "..."
-            : balances?.usdfcBalanceFormatted.toFixed(1) + " $"}
+          Store anything you want: files, code, or cloud data. Secure, decentralized, and easy to use. Powered by Filecoin and Synapse SDK.
+        </motion.p>
+        <motion.p
+          variants={itemVariants}
+          className="text-base font-medium text-gray-500 dark:text-gray-400 mb-2 text-center"
+        >
+          Your USDFC balance: {isLoadingBalances || !isConnected ? "..." : balances?.usdfcBalanceFormatted.toFixed(1) + " $"}
         </motion.p>
         {chainId !== 314159 && (
           <motion.p
             variants={itemVariants}
-            className="text-lg font-semibold capitalize-none transition-colors duration-50 mb-2  mt-1 hover:text-foreground flex items-center gap-2 text-center"
+            className="text-base font-semibold text-red-600 bg-red-50 dark:bg-red-900/60 rounded p-2 mb-2 text-center"
           >
-            <span className="max-w-xl text-center bg-red-600/70  p-2 rounded-md">
-              ⚠️ Filecoin mainnet is not supported yet. Please use Filecoin
-              Calibration network.
-            </span>
+            ⚠️ Please use the Filecoin Calibration network.
           </motion.p>
         )}
         <AnimatePresence mode="wait">
@@ -145,98 +121,100 @@ export default function Home() {
                 <ConnectButton />
               </motion.div>
               <motion.p variants={itemVariants} className="mt-3 text-secondary">
-                Please connect your wallet to upload dApp
+                Please connect your wallet to use storewhatever
               </motion.p>
             </motion.div>
           ) : (
             <motion.div
               key="content"
               variants={itemVariants}
-              className="mt-3 max-w-5xl w-full border-1 rounded-lg p-8"
+              className="mt-3 max-w-5xl w-full border-1 rounded-lg p-8 bg-white dark:bg-neutral-900 shadow-lg"
             >
-              <motion.div variants={itemVariants} className="flex mb-6">
-                <motion.button
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  onClick={() => setActiveTab("manage-storage")}
-                  className={`flex-1 py-2 px-4 text-center border-b-2 transition-colors ${
-                    activeTab === "manage-storage"
-                      ? "border-primary text-primary-foreground bg-primary"
-                      : "border-transparent text-secondary hover:text-primary hover:bg-secondary/10"
-                  }`}
-                >
-                  Manage Storage
-                </motion.button>
-                <motion.button
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  onClick={() => setActiveTab("upload")}
-                  className={`flex-1 py-2 px-4 text-center border-b-2 transition-colors ${
-                    activeTab === "upload"
-                      ? "border-primary text-primary-foreground bg-primary"
-                      : "border-transparent text-secondary hover:text-primary hover:bg-secondary/10"
-                  }`}
-                >
-                  Upload File
-                </motion.button>
-                <motion.button
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  onClick={() => setActiveTab("proof-set")}
-                  className={`flex-1 py-2 px-4 text-center border-b-2 transition-colors ${
-                    activeTab === "proof-set"
-                      ? "border-primary text-primary-foreground bg-primary"
-                      : "border-transparent text-secondary hover:text-primary hover:bg-secondary/10"
-                  }`}
-                >
-                  View Proof Sets
-                </motion.button>
+              {/* Tabs */}
+              <motion.div variants={itemVariants} className="flex mb-6 gap-2 flex-wrap">
+                {TABS.map((tab) => (
+                  <motion.button
+                    key={tab.key}
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    onClick={() => setActiveTab(tab.key)}
+                    className={`flex-1 py-2 px-4 text-center border-b-2 transition-colors rounded-t-md font-semibold text-base ${
+                      activeTab === tab.key
+                        ? "border-blue-600 text-blue-700 bg-blue-50 dark:bg-blue-900 dark:text-blue-200"
+                        : "border-transparent text-gray-500 hover:text-blue-600 hover:bg-gray-100 dark:hover:bg-gray-800"
+                    }`}
+                  >
+                    {tab.label}
+                  </motion.button>
+                ))}
               </motion.div>
-
+              {/* Tab Content */}
               <AnimatePresence mode="wait">
-                {activeTab === "manage-storage" ? (
+                {activeTab === "my-storage" && (
                   <motion.div
-                    key="deposit"
+                    key="my-storage"
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
                     exit={{ opacity: 0, x: 20 }}
-                    transition={{
-                      type: "spring",
-                      stiffness: 200,
-                      damping: 20,
-                    }}
+                    transition={{ type: "spring", stiffness: 200, damping: 20 }}
                   >
                     <StorageManager />
                   </motion.div>
-                ) : activeTab === "upload" ? (
+                )}
+                {activeTab === "upload" && (
                   <motion.div
                     key="upload"
-                    // top to bottom
                     initial={{ opacity: 0, y: -20 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: +20 }}
-                    transition={{
-                      type: "smooth",
-                    }}
+                    transition={{ type: "smooth" }}
                   >
                     <FileUploader />
                   </motion.div>
-                ) : (
-                  activeTab === "proof-set" && (
-                    <motion.div
-                      key="proof-set"
-                      initial={{ opacity: 0, x: 20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      exit={{ opacity: 0, x: -20 }}
-                      transition={{
-                        type: "spring",
-                        stiffness: 200,
-                        damping: 20,
-                      }}
-                    >
-                      <ViewProofSets />
-                    </motion.div>
-                  )
+                )}
+                {activeTab === "add-drive" && (
+                  <motion.div
+                    key="add-drive"
+                    initial={{ opacity: 0, y: -20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: +20 }}
+                    transition={{ type: "smooth" }}
+                    className="flex flex-col items-center justify-center min-h-[200px] text-center"
+                  >
+                    <h2 className="text-xl font-semibold mb-2">Add from Drive</h2>
+                    <p className="text-gray-500 dark:text-gray-400 mb-4">Connect your Google Drive or Dropbox to import files. (Coming soon)</p>
+                    <button className="px-4 py-2 rounded bg-blue-600 text-white font-semibold opacity-60 cursor-not-allowed" disabled>
+                      Connect Cloud Storage
+                    </button>
+                  </motion.div>
+                )}
+                {activeTab === "add-repo" && (
+                  <motion.div
+                    key="add-repo"
+                    initial={{ opacity: 0, y: -20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: +20 }}
+                    transition={{ type: "smooth" }}
+                    className="flex flex-col items-center justify-center min-h-[200px] text-center"
+                  >
+                    <h2 className="text-xl font-semibold mb-2">Add Repository</h2>
+                    <p className="text-gray-500 dark:text-gray-400 mb-4">Store code from your GitHub or GitLab repositories. (Coming soon)</p>
+                    <input type="text" placeholder="Paste repo URL (e.g. https://github.com/user/repo)" className="w-full max-w-md px-3 py-2 border rounded mb-2" disabled />
+                    <button className="px-4 py-2 rounded bg-blue-600 text-white font-semibold opacity-60 cursor-not-allowed" disabled>
+                      Import Repository
+                    </button>
+                  </motion.div>
+                )}
+                {activeTab === "proof-set" && (
+                  <motion.div
+                    key="proof-set"
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -20 }}
+                    transition={{ type: "spring", stiffness: 200, damping: 20 }}
+                  >
+                    <ViewProofSets />
+                  </motion.div>
                 )}
               </AnimatePresence>
             </motion.div>

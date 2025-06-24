@@ -32,18 +32,18 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <title>Fil services demo</title>
+        <title>storewhatever</title>
         <meta
           name="description"
-          content="Demo dApp Powered by synapse-sdk. Upload files to Filecoin with USDFC."
+          content="storewhatever: Store anything you want, securely and professionally. Powered by Filecoin and Synapse SDK."
         />
         <meta
           name="keywords"
-          content="Filecoin, Demo, synapse-sdk, pdp, upload, filecoin, usdfc"
+          content="storewhatever, storage, decentralized, file upload, synapse-sdk, filecoin, usdfc"
         />
-        <meta name="author" content="FIL-Builders" />
-        <meta name="viewport" content="width=device-width, initial-scale=0.6" />
-        <link rel="icon" href="/filecoin.svg" />
+        <meta name="author" content="storewhatever" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="icon" href="/favicon.ico" />
       </head>
       <body>
         <ThemeProvider>

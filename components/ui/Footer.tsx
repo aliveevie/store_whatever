@@ -1,7 +1,5 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
-import Github from "./icons/Github";
-import Filecoin from "./icons/Filecoin";
 
 export default function Footer() {
   const footerVariants = {
@@ -29,31 +27,13 @@ export default function Footer() {
     },
   };
 
-  const floatingAnimation = {
-    y: [0, -5, 0],
-    transition: {
-      duration: 3,
-      repeat: Infinity,
-      ease: "easeInOut",
-    },
-  };
-
-  const heartAnimation = {
-    scale: [1, 1.2, 1],
-    transition: {
-      duration: 1.5,
-      repeat: Infinity,
-      ease: "easeInOut",
-    },
-  };
-
   return (
     <motion.footer
       variants={footerVariants}
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, amount: 0.3 }}
-      className="flex w-full items-center overflow-hidden justify-center overflow-y-auto rounded-t-lg bg-primary border-t"
+      className="flex w-full items-center justify-center rounded-t-lg bg-white dark:bg-black border-t shadow-inner"
     >
       <motion.div
         variants={itemVariants}
@@ -61,46 +41,17 @@ export default function Footer() {
       >
         <motion.div
           variants={footerVariants}
-          className="flex flex-col items-center gap-5"
+          className="flex flex-col items-center gap-3"
         >
           <motion.div
             variants={itemVariants}
-            className="flex items-center gap-3"
+            className="flex items-center gap-2"
           >
-            <motion.h1
-              variants={itemVariants}
-              whileHover={{ scale: 1.05 }}
-              transition={{ duration: 0.3 }}
-              className="text-3xl font-bold uppercase tracking-tighter text-foreground flex items-center gap-2"
-            >
-              <Filecoin />
-              Fil services demo
-            </motion.h1>
+            <span className="text-xl font-extrabold tracking-tight text-blue-600">store</span>
+            <span className="text-xl font-extrabold tracking-tight text-gray-900 dark:text-white">whatever</span>
           </motion.div>
-          <motion.div
-            variants={itemVariants}
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.95 }}
-            transition={{ duration: 0.2 }}
-          >
-            <Link
-              className="text-center text-xl font-semibold transition-colors duration-200 hover:text-foreground flex items-center gap-2"
-              href="https://github.com/FIL-Builders/fs-upload-dapp"
-              target="_blank"
-            >
-              {"Fork me"}
-              <Github />
-            </Link>
-          </motion.div>
-          <motion.p variants={itemVariants} className="text-center text-lg">
-            Build with{" "}
-            <motion.span
-              animate={heartAnimation}
-              className="inline-block text-red-500"
-            >
-              ❤️
-            </motion.span>{" "}
-            for everyone
+          <motion.p variants={itemVariants} className="text-center text-sm text-gray-500 dark:text-gray-400 mt-2">
+            &copy; {new Date().getFullYear()} storewhatever. All rights reserved.
           </motion.p>
         </motion.div>
       </motion.div>
