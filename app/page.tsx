@@ -10,8 +10,10 @@ import { ViewProofSets } from "@/components/ViewProofSets";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { useBalances } from "@/hooks/useBalances";
 import { FaDatabase, FaCloudUploadAlt, FaGoogleDrive, FaCodeBranch, FaShieldAlt } from "react-icons/fa";
+import { SiYoutube } from "react-icons/si";
 import { DriveImport } from "@/components/DriveImport";
 import { GithubImport } from "@/components/GithubImport";
+import { YoutubeImport } from "@/components/YoutubeImport";
 
 // Professional tab names
 const TABS = [
@@ -19,6 +21,7 @@ const TABS = [
   { key: "upload", label: "Upload", icon: <FaCloudUploadAlt size={18} /> },
   { key: "add-drive", label: "Add from Drive", icon: <FaGoogleDrive size={18} /> },
   { key: "add-repo", label: "Add Repo", icon: <FaCodeBranch size={18} /> },
+  { key: "add-youtube", label: "Add from YouTube", icon: <SiYoutube size={18} className="text-red-600" /> },
   { key: "proof-set", label: "Proof Sets", icon: <FaShieldAlt size={18} /> },
 ] as const;
 type Tab = typeof TABS[number]["key"];
@@ -211,6 +214,18 @@ export default function Home() {
                 className="bg-white border border-gray-200 rounded-2xl shadow p-6 flex flex-col items-center justify-center min-h-[200px] text-center"
               >
                 <GithubImport />
+              </motion.div>
+            )}
+            {activeTab === "add-youtube" && (
+              <motion.div
+                key="add-youtube"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 20 }}
+                transition={{ type: "spring", stiffness: 200, damping: 20 }}
+                className="bg-white border border-gray-200 rounded-2xl shadow p-6 flex flex-col items-center justify-center min-h-[200px] text-center"
+              >
+                <YoutubeImport />
               </motion.div>
             )}
             {activeTab === "proof-set" && (
