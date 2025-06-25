@@ -10,6 +10,8 @@ import { ViewProofSets } from "@/components/ViewProofSets";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { useBalances } from "@/hooks/useBalances";
 import { FaDatabase, FaCloudUploadAlt, FaGoogleDrive, FaCodeBranch, FaShieldAlt } from "react-icons/fa";
+import { DriveImport } from "@/components/DriveImport";
+import { GithubImport } from "@/components/GithubImport";
 
 // Professional tab names
 const TABS = [
@@ -196,11 +198,7 @@ export default function Home() {
                 transition={{ type: "spring", stiffness: 200, damping: 20 }}
                 className="bg-white border border-gray-200 rounded-2xl shadow p-6 flex flex-col items-center justify-center min-h-[200px] text-center"
               >
-                <h2 className="text-xl font-semibold mb-2">Add from Drive</h2>
-                <p className="text-gray-500 dark:text-gray-400 mb-4">Connect your Google Drive or Dropbox to import files. (Coming soon)</p>
-                <button className="px-4 py-2 rounded bg-blue-600 text-white font-semibold opacity-60 cursor-not-allowed" disabled>
-                  Connect Cloud Storage
-                </button>
+                <DriveImport />
               </motion.div>
             )}
             {activeTab === "add-repo" && (
@@ -212,12 +210,7 @@ export default function Home() {
                 transition={{ type: "spring", stiffness: 200, damping: 20 }}
                 className="bg-white border border-gray-200 rounded-2xl shadow p-6 flex flex-col items-center justify-center min-h-[200px] text-center"
               >
-                <h2 className="text-xl font-semibold mb-2">Add Repository</h2>
-                <p className="text-gray-500 dark:text-gray-400 mb-4">Store code from your GitHub or GitLab repositories. (Coming soon)</p>
-                <input type="text" placeholder="Paste repo URL (e.g. https://github.com/user/repo)" className="w-full max-w-md px-3 py-2 border rounded mb-2" disabled />
-                <button className="px-4 py-2 rounded bg-blue-600 text-white font-semibold opacity-60 cursor-not-allowed" disabled>
-                  Import Repository
-                </button>
+                <GithubImport />
               </motion.div>
             )}
             {activeTab === "proof-set" && (
