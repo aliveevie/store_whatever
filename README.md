@@ -1,84 +1,172 @@
-# Filecoin Synapse dApp Tutorial
+# 🚀 Store Whatever - Universal File Import & Filecoin Storage dApp
 
-This repo will serve with tutorial to demonstrate how to build a decentralized application (dApp) that interacts with Filecoin Synapse - a smart-contract based marketplace for storage and other services in the Filecoin ecosystem.
+**Store anything, from anywhere, on Filecoin.** A revolutionary decentralized application that breaks down barriers between data sources, enabling seamless file uploads from multiple platforms directly to Filecoin's decentralized storage network.
 
-## Overview
+---
 
-This dApp showcases:
-- Connecting to Filecoin networks (Mainnet/Calibration)
-- Installing synapse-sdk to your project.
-- Depositing funds to Synapse contracts using USDFC token.
-- Uploading files to Filecoin through Synapse
+## 🎯 What Makes Store Whatever Special?
 
-## Prerequisites
+**Store Whatever** isn't just another file upload tool - it's a **universal data bridge** that connects your favorite platforms to decentralized storage. Whether your files live on Google Drive, GitHub, YouTube, or your local device, we make it effortless to store them permanently on Filecoin.
 
-- Node.js 18+ and npm
-- A web3 wallet (like MetaMask)
-- Basic understanding of React and TypeScript
-- Get some tFIL tokens on Filecoin Calibration testnet [link to faucet](https://faucet.calibnet.chainsafe-fil.io/funds.html)
-- Get some USDFC tokens on Filecoin Calibration testnet [link to faucet](https://forest-explorer.chainsafe.dev/faucet/calibnet_usdfc)
+### ✨ Key Features
 
-## Getting Started
+🌐 **Multi-Source Import**
+- 📁 **Local Upload:** Drag-and-drop or select files from your device
+- ☁️ **Google Drive:** Import files directly from public Google Drive links
+- 🐙 **GitHub Repositories:** Download and store entire repos or specific files
+- 🎥 **YouTube Videos:** Archive your favorite videos to decentralized storage
 
-1. Clone this repository:
+🎨 **Professional UX**
+- Clean, intuitive tabbed interface for easy navigation
+- Real-time progress indicators and status updates
+- Comprehensive error handling with helpful feedback
+- Modern design built with React and Tailwind CSS
+
+🔒 **Decentralized & Secure**
+- Powered by Filecoin's robust decentralized storage network
+- Smart contract integration via Synapse protocol
+- Web3 wallet connection with RainbowKit
+- Pay with USDFC tokens for transparent storage costs
+
+## 🎬 See It In Action
+
+**🎥 Demo Video:** [Watch the full walkthrough](https://youtu.be/MCuw1eY4RxY)
+
+**🌟 Live Demo:** [Try it now at store-whatever.vercel.app](https://store-whatever.vercel.app/)
+
+**📋 Implementation Details:** [View the comprehensive PR](https://github.com/aliveevie/store_whatever/pull/1)
+
+---
+
+## 🏗️ Architecture & Technology
+
+### Frontend Stack
+- **React 18** with **Next.js 14** (App Router)
+- **TypeScript** for type safety
+- **Tailwind CSS** for responsive design
+- **RainbowKit** for Web3 wallet integration
+
+### Backend Infrastructure
+- **Next.js API Routes** for CORS-compliant proxy services
+- **JSZip** for GitHub repository extraction
+- **Synapse SDK** for Filecoin integration
+
+### Blockchain Integration
+- **Filecoin Mainnet & Calibration** networks
+- **USDFC** token for storage payments
+- **Smart contracts** via Synapse protocol
+
+---
+
+## 🚀 Quick Start
+
+### Prerequisites
+
+- Node.js 18+ and npm/pnpm
+- Web3 wallet (MetaMask recommended)
+- Get testnet tokens:
+  - [Filecoin Calibration tFIL](https://faucet.calibnet.chainsafe-fil.io/funds.html)
+  - [USDFC tokens](https://forest-explorer.chainsafe.dev/faucet/calibnet_usdfc)
+
+### Installation
+
 ```bash
-git clone https://github.com/yourusername/fs-upload-app
-cd fs-upload-app
-```
+# Clone the repository
+git clone https://github.com/aliveevie/store_whatever.git
+cd store_whatever
 
-2. Install dependencies:
-```bash
+# Install dependencies
 npm install
-```
+# or
+pnpm install
 
-3. Run the development server:
-```bash
+# Start development server
 npm run dev
+# or
+pnpm dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) to view the dApp.
+Open [http://localhost:3000](http://localhost:3000) to see the magic happen! ✨
 
-## Key Components
+---
 
-### Wallet Connection
-The dApp uses RainbowKit for seamless wallet connection, configured specifically for Filecoin networks:
-- Filecoin Mainnet
-- Filecoin Calibration (testnet)
+## 📖 How It Works
 
-### Query token and storage usage Balances
-Shows how to:
-- Get user FIL-USDFC-SynapseStorageUsage balances
-- hook used to query user balances [link](https://github.com/FIL-Builders/fs-upload-dapp/blob/main/hooks/useBalances.ts)
+### 1. **Connect Your Wallet**
+- Support for multiple wallet providers via RainbowKit
+- Automatic network switching between Filecoin Mainnet and Calibration
 
-### Pay For Storage with USDFC
-Demonstrates how to:
-- Pay for storage by depositing funds to Synapse contracts using USDFC token
-- Handles one time payment for 10GB usage that persists 30days
-- Notifies repayment if less than 10days remain for paying synapse based on current usage
-- hook used to conduct a payment [link](https://github.com/FIL-Builders/fs-upload-dapp/blob/main/hooks/usePayment.ts)
+### 2. **Choose Your Source**
+Navigate through our intuitive tabs:
+- **📱 Device:** Direct file upload with drag-and-drop
+- **☁️ Google Drive:** Paste public file links for instant import
+- **🐙 GitHub:** Import repositories as zip files
+- **🎥 YouTube:** Archive videos for permanent storage
 
-### File Upload
-Shows how to:
-- Create a user-friendly file upload interface
-- Upload file to Filecoin using synapse-sdk
-- Monitor upload status
-- Download filecoin from Filecoin using synapse-sdk
-- hook used to upload a file [link](https://github.com/FIL-Builders/fs-upload-dapp/blob/main/hooks/useFileUpload.ts)
+### 3. **Upload & Store**
+- Files are processed through our secure proxy service
+- Automatic upload to Filecoin via Synapse protocol
+- Real-time progress tracking and status updates
 
-## Learn More
+### 4. **Manage Storage**
+- View all your stored files and proof sets
+- Monitor storage usage and remaining balance
+- Easy file retrieval and sharing options
 
-- [Filecoin synapse-sdk](https://github.com/FilOzone/synapse-sdk)
+---
+
+## 🛠️ Advanced Features
+
+### CORS-Free File Fetching
+Our backend proxy service (`/api/proxy-download`) ensures seamless file imports from external sources without browser restrictions.
+
+### Smart Storage Management
+- Automatic 10GB storage allocation for 30 days
+- Intelligent balance monitoring and payment reminders
+- Transparent pricing with USDFC tokens
+
+### Extensible Architecture
+Built with modularity in mind - easily add new import sources or customize the upload flow to fit your needs.
+
+---
+
+## 🤝 Contributing
+
+We welcome contributions! Whether it's:
+- 🐛 Bug fixes and improvements
+- ✨ New import source integrations
+- 📚 Documentation enhancements
+- 🎨 UI/UX improvements
+
+Please feel free to submit a Pull Request or open an issue.
+
+---
+
+## 📚 Technical Documentation
+
+- [Filecoin Synapse SDK](https://github.com/FilOzone/synapse-sdk)
 - [USDFC Token Documentation](https://docs.secured.finance/usdfc-stablecoin/getting-started)
-- [Wagmi Documentation](https://wagmi.sh)
 - [RainbowKit Documentation](https://www.rainbowkit.com)
-- Best practices in React!
-  - [Tanstack Queries](https://tanstack.com/query/latest/docs/framework/react/guides/queries)
-  - [Tanstack Mutations](https://tanstack.com/query/latest/docs/framework/react/guides/mutations)
+- [Next.js App Router](https://nextjs.org/docs)
 
-## Contributing
+---
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+## 🎯 Roadmap
 
-## License
+- [ ] **Dropbox Integration:** Expand cloud storage support
+- [ ] **Multiple File Selection:** Choose specific files from GitHub repos
+- [ ] **Video Processing:** Enhanced YouTube import with format options
+- [ ] **Mobile App:** React Native implementation
+- [ ] **API Access:** Developer API for programmatic uploads
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+---
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+---
+
+**Built with ❤️ for the decentralized web**
+
+*Store Whatever - Because your data deserves freedom.*
